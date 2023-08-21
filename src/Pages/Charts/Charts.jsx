@@ -7,7 +7,7 @@ import '../Charts/Chart.css'
 import { Menu, MenuButton, MenuItem } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/transitions/slide.css';
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaPlusCircle } from "react-icons/fa";
 import { format } from 'date-fns';
 
 const Charts = () => {
@@ -38,7 +38,6 @@ const Charts = () => {
 
     const calendarRows = [];
 
-    const day = format(new Date(currentMonth?._d), 'eee')
     const weeks = currentMonth?._locale?._weekdaysShort
     const firstDayOfMonthIndex = currentMonth.startOf('month').day();
 
@@ -49,21 +48,16 @@ const Charts = () => {
         const today = format(new Date(newDate), 'PP')
         const thisDay = format(new Date(date?._d), 'PP')
 
-        if (today === thisDay) {
-            console.log(today);
-        }
 
         calendarRows.push(
             <div key={i}>
                 <div className='flex justify-between '>
-                    <span className='text-lg font-semibold'>{date.date()}</span>
+                    <span className={`text-lg font-semibold ${today === thisDay ? 'bg-primary rounded-full text-white w-7 h-7 text-base p-2 flex justify-center items-center' : 'bg-gray-300 rounded-full text-black w-7 h-7 text-base p-2 flex justify-center items-center'}`}>{date.date()}</span>
                     {/* <button onClick={() => handleAddClick(date)}>click me</button> */}
 
                     <Menu align='end' arrow={true} menuButton={<MenuButton>
                         <div>
-                            <div className=' bg-gray-400 p-1 w-5 h-5 flex justify-center items-center rounded-full'>
-                                <FaPlus />
-                            </div>
+                            <FaPlusCircle className='text-gray-500' />
                         </div>
                     </MenuButton>} transition>
                         <MenuItem>
@@ -84,7 +78,7 @@ const Charts = () => {
         );
     }
     return (
-        <div className='min-h-screen flex flex-col gap-5 py-20 w-3/4 mx-auto'>
+        <div className='min-h-screen flex flex-col gap-5 py-20 w-11/12 mx-auto'>
             <Link to='/' className='font-semibold'>--Go to Home</Link>
             <div>
                 <div className="custom-calendar">
@@ -107,19 +101,20 @@ const Charts = () => {
                                 {dayName}
                             </h2>
                         ))}
-                        {/* Fill empty columns for days before the first day of the month */}
+
                         {Array.from({ length: firstDayOfMonthIndex }, (_, i) => (
-                            <div key={i} className="border p-3 h-40 bg-gray-100 rounded-sm"></div>
+                            <div key={i} className="border p-2 h-40 bg-gray-100 rounded-sm"></div>
                         ))}
                         {calendarRows.map((calendarRow, i) => (
                             <div
                                 key={i}
-                                className={`border p-3 h-40 ${moment(startDate).add(i, 'days').isSame(moment(), 'day') ? 'bg-slate-300' : 'bg-gray-100'} rounded-sm`}
+                                className={`border p-2 h-40 ${moment(startDate).add(i, 'days').isSame(moment(), 'day') ? 'bg-gray-300' : 'bg-slate-100'} rounded-sm`}
                             >
                                 {calendarRow}
-                                {/* ... (rest of your calendar row JSX) */}
+
                             </div>
                         ))}
+
                     </div>
                 </div>
             </div>

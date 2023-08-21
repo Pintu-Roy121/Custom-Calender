@@ -59,7 +59,7 @@ const Questions = () => {
     }
 
     return (
-        <div className='min-h-screen pt-24 mb-20 pb-20 w-1/4'>
+        <div className='min-h-screen pt-24 mb-20 pb-20 w-1/3'>
             <Link to='/chart' className='font-semibold'>--Go to Chart</Link>
             <h2 className='text-6xl font-bold'>Tell Us About Your Team</h2>
             <form onSubmit={handleSubmit} className="form-control w-full flex flex-col gap-5">
